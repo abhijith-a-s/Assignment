@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+// import React from 'react';
+// import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+// import LoginPage from './Auth/Login';
+// import TestPage from './Test/testPage'
+// import ResultsPage from './Result/resultPage';
 
-function App() {
+// const App = () => {
+//   const isLoggedIn = true; // You would typically have some authentication logic here
+
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/login" element={isLoggedIn ? <Navigate to="/test" /> : <LoginPage />} />
+//         <Route path="/test" element={<TestPage />} />
+//         <Route path="/results" element={<ResultsPage />} />
+//         <Route path="*" element={<Navigate to="/login" />} />
+//       </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;
+
+
+
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginPage from './Auth/Login';
+import TestPage from './Test/testPage'
+import ResultsPage from './Result/resultPage';
+
+
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={isLoggedIn ? <Navigate to="/test" /> : <LoginPage onLogin={() => setIsLoggedIn(true)} />} />
+        <Route path="/test" element={isLoggedIn ? <TestPage /> : <Navigate to="/login" />} />
+        <Route path="/results" element={isLoggedIn ? <ResultsPage /> : <Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
+
